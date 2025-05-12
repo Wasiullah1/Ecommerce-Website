@@ -1,0 +1,52 @@
+.carousel {
+  padding: 40px;
+  background-color: #fdfdfd;
+}
+
+.carousel h2 {
+  margin-bottom: 20px;
+}
+
+.carousel-products {
+  display: flex;
+  gap: 20px;
+}
+
+.product-card {
+  padding: 20px;
+  border: 1px solid #eee;
+  width: 200px;
+  position: relative;
+}
+
+.product-img {
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.discount {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+.add-cart-btn {
+  background: #f27a1a;
+  color: white;
+  border: none;
+  padding: 8px;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
