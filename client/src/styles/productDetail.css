@@ -1,63 +1,87 @@
-.product-detail {
+.product-detail-container {
   display: flex;
-  gap: 40px;
-  padding: 50px;
-  background-color: #fff;
+  flex-wrap: wrap;
+  padding: 40px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.product-detail img {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 8px;
+.product-image {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+}
+
+.product-image img {
+  max-width: 100%;
+  border-radius: 10px;
 }
 
 .product-info {
-  max-width: 500px;
+  flex: 1;
+  padding: 20px;
 }
 
 .product-info h2 {
-  font-size: 28px;
+  font-size: 32px;
   margin-bottom: 10px;
+  color: #333;
 }
 
-.product-info .price {
-  color: #f27a1a;
-  font-size: 20px;
+.product-brand,
+.product-category {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.product-description {
+  font-size: 18px;
+  color: #444;
+  margin: 20px 0;
+}
+
+.product-price {
+  font-size: 26px;
+  color: #e67e22;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.product-info .desc {
-  margin-bottom: 15px;
-  color: #555;
+.product-actions {
+  margin-top: 20px;
 }
 
-.product-info .stock {
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.product-info .quantity {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.product-info .quantity label {
-  margin-right: 10px;
-}
-
-.product-info input {
-  width: 60px;
-  padding: 5px;
-}
-
-.product-info button {
-  background-color: #f27a1a;
-  color: white;
+.add-to-cart-btn,
+.buy-now-btn {
+  padding: 12px 20px;
+  font-size: 16px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  margin-right: 15px;
   cursor: pointer;
+  border-radius: 6px;
+  transition: opacity 0.3s;
+}
+
+.add-to-cart-btn {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #2980b9;
+}
+
+.buy-now-btn {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.buy-now-btn:hover {
+  background-color: #27ae60;
+}
+
+.product-detail-loading {
+  padding: 50px;
+  text-align: center;
+  font-size: 20px;
 }

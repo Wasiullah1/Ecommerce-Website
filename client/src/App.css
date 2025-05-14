@@ -1,3 +1,11 @@
+.link-style {
+  text-decoration: none;
+  color: black;
+}
+
+.link-style:hover {
+  color: #ff6600; /* Optional: highlight color on hover */
+}
 .App {
   text-align: center;
 }

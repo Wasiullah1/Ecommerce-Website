@@ -1,43 +1,36 @@
-import React, { useState } from 'react';
-import '../styles/cart.css'; // make sure this CSS file exists
+// src/pages/Cart.js
+
+import React, { useState, useEffect } from 'react';
+import '../styles/cart.css';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'YooH Green Tea Drink',
-      price: 3.99,
-      quantity: 2,
-      image: 'https://via.placeholder.com/100', // Replace with actual image URL
-    },
-    {
-      id: 2,
-      name: 'Trung Nguyen Coffee',
-      price: 5.49,
-      quantity: 1,
-      image: 'https://via.placeholder.com/100',
-    },
-  ]);
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(storedCart);
+  }, []);
 
   const handleQuantityChange = (id, amount) => {
     const updatedCart = cartItems.map(item =>
-      item.id === id
+      item._id === id
         ? { ...item, quantity: Math.max(1, item.quantity + amount) }
         : item
     );
     setCartItems(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   const handleRemoveItem = id => {
-    const updatedCart = cartItems.filter(item => item.id !== id);
+    const updatedCart = cartItems.filter(item => item._id !== id);
     setCartItems(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   const getTotalPrice = () =>
     cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
-  
-  const navigate = useNavigate();
 
   const handleCheckout = () => {
     const loggedIn = localStorage.getItem("loggedIn");
@@ -57,17 +50,17 @@ const Cart = () => {
       ) : (
         <div className="cart-container">
           {cartItems.map(item => (
-            <div className="cart-item" key={item.id}>
+            <div className="cart-item" key={item._id}>
               <img src={item.image} alt={item.name} />
               <div className="item-details">
                 <h3>{item.name}</h3>
                 <p>${item.price.toFixed(2)}</p>
                 <div className="quantity-control">
-                  <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
+                  <button onClick={() => handleQuantityChange(item._id, -1)}>-</button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
+                  <button onClick={() => handleQuantityChange(item._id, 1)}>+</button>
                 </div>
-                <button className="remove-btn" onClick={() => handleRemoveItem(item.id)}>
+                <button className="remove-btn" onClick={() => handleRemoveItem(item._id)}>
                   Remove
                 </button>
               </div>

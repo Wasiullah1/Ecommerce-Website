@@ -1,0 +1,61 @@
+// backend/data/products.js
+
+const products = [
+  {
+    name: 'Yoosh Green Tea Drink',
+    image: '/images/yoosh.jpg',
+    brand: 'Yoosh',
+    category: 'Drinks',
+    description: 'Refreshing green tea with natural flavor',
+    price: 2.89,
+    countInStock: 100,
+    rating: 4.5,
+    numReviews: 12,
+  },
+  {
+    name: 'Yoosh Green Tea Drink',
+    image: '/images/yoosh.jpg',
+    brand: 'Yoosh',
+    category: 'Drinks',
+    description: 'Refreshing green tea with natural flavor',
+    price: 3.99,
+    countInStock: 100,
+    rating: 4.5,
+    numReviews: 12,
+  },
+  {
+    name: 'Tung Nguyen Coffee',
+    image: '/images/coffee.jpg',
+    brand: 'Tung Nguyen',
+    category: 'Coffee',
+    description: 'Strong Vietnamese ground coffee',
+    price: 6.5,
+    countInStock: 50,
+    rating: 4.0,
+    numReviews: 8,
+  },
+  {
+    name: 'Green Tea Drink',
+    image: '/images/yoosh.jpg',
+    brand: 'Yoosh',
+    category: 'Drinks',
+    description: 'Refreshing green tea with natural flavor',
+    price: 4.29,
+    countInStock: 100,
+    rating: 4.5,
+    numReviews: 12,
+  },
+  {
+    name: 'Taro Chips 200g',
+    image: '/images/taro.jpg',
+    brand: 'Taro',
+    category: 'Snacks',
+    description: 'Crunchy and salty taro chips',
+    price: 3.99,
+    countInStock: 70,
+    rating: 4.2,
+    numReviews: 10,
+  },
+];
+
+export default products;
