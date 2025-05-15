@@ -22,10 +22,14 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
-      localStorage.setItem('userInfo', JSON.stringify(data)); // Store user info
-      navigate('/'); // Redirect to the home page
+      // localStorage.setItem('userInfo', JSON.stringify(data)); // Store user info
+      if (data && data._id) {
+        navigate('/');
+      } else {
+        alert('Unexpected login response');
+      } // Redirect to the home page
     } catch (error) {
-      setError(error.response?.data?.message || 'Login failed'); // Set error message
+      setError(error?.response?.data?.message || 'Login failed'); // Set error message
     } finally {
       setLoading(false); // Stop loading
     }
@@ -50,7 +54,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" disabled={loading}>
+        <button disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
         <p onClick={() => navigate('/signup')} className="signup-link">

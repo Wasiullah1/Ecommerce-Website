@@ -1,6 +1,7 @@
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 
 export const registerUser = async (req, res) => {
@@ -45,9 +46,17 @@ export const loginUser = async (req, res) => {
       console.log('Password does not match');
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: '7d',});
 
+     res.cookie('token', token, {
+    httpOnly: true,
+    secure: false, // Set to true in production (with HTTPS)
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
     // Respond with user data and token
-    res.json({
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -57,4 +66,15 @@ export const loginUser = async (req, res) => {
     console.error('Server error:', error);
     res.status(500).json({ message: 'Server error' });
   }
+
+  
+};  
+export const logoutUser = (req, res) => {
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: new Date(0),
+    secure: true,
+    sameSite: 'lax',
+  });
+  res.status(200).json({ message: 'Logged out successfully' });
 };
