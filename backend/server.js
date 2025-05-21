@@ -1,6 +1,7 @@
 // backend/server.js
 
 import express from 'express';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -20,7 +21,7 @@ const app = express();
 // Middleware
 // app.use(cors());
 app.use(cors({
-  origin: allowedOrigins,
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(express.json());
@@ -36,6 +37,7 @@ app.use(errorHandler);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () =>
   console.log(`🚀 Server running at http://localhost:${PORT}`)
 );

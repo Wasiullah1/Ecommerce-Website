@@ -30,4 +30,35 @@ const getProductById = async (req, res) => {
 }
 };
 
-export { getProducts, getProductById };
+const addProduct = async (req, res) => {
+  try {
+    console.log('✅ Incoming product data:', req.body); // 👈 See what data is received
+
+    const { name, description, price, image, brand, category, countInStock } = req.body;
+
+    // Validate required fields
+    if (!name || !description || !price || !image || !brand || !category || !countInStock) {
+      console.log('❌ Validation failed');
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const product = new Product({
+      name,
+      description,
+      price,
+      image,
+      brand,
+      category,
+      countInStock,
+    });
+
+    const savedProduct = await product.save();
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    console.error('❌ Error in addProduct:', error.message); // 👈 Print the actual error
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+
+export { getProducts, getProductById, addProduct };

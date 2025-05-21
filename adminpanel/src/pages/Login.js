@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/LoginScreen.css'; // We’ll create this CSS file
+import '../styles/LoginScreen.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +8,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Admin Login:', { email, password });
-    // For now just simulate login, we'll connect to backend later
   };
 
   return (
