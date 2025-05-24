@@ -13,7 +13,7 @@ const ProductManagementScreen = () => {
   return (
     <div className="product-management">
       <h2>📦 Product Management</h2>
-      <button className="add-button" onClick={() => navigate('/products/new')}>
+      <button className="add-button" onClick={() => navigate('/add-product')}>
         + Add New Product
       </button>
       <table className="product-table">

@@ -9,6 +9,7 @@ import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import authRoutes from './routes/authRoutes.js';
 
 
 const allowedOrigins = ['http://localhost:3000'];
@@ -30,6 +31,7 @@ app.use(cookieParser()); // Parse JSON bodies
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/admin', authRoutes);
 
 // Error Handlers
 app.use(notFound);

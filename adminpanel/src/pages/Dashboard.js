@@ -1,17 +1,61 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import '../styles/Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/admin/verify', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!res.ok) {
+        navigate('/'); // Not authenticated, redirect to login
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      navigate('/'); // Redirect if error
+    }
+  };
+
+  checkAuth();
+}, [navigate]);
+  
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/admin/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (res.ok) {
+        navigate('/');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+  
+
   return (
     <div className="dashboard">
       <aside className="sidebar">
         <h2>🛍️ Admin Panel</h2>
         <ul>
           <li>📊 Dashboard</li>
-          <li>📦 Products</li>
-          <li>🧾 Orders</li>
-          <li>👥 Users</li>
-          <li>🚪 Logout</li>
+          <li onClick={() => navigate('/products')}>📦 Products</li>
+          <li onClick={() => navigate('/orders')}>🧾 Orders</li>
+          <li onClick={() => navigate('/users')}>👥 Users</li>
+          <li onClick={() => navigate('/add-product')}>📦 Add Products</li>
+          <li onClick={handleLogout} style={{ cursor: 'pointer'}}>
+            🚪 Logout
+          </li>
         </ul>
       </aside>
 
