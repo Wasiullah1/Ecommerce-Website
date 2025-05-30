@@ -24,7 +24,7 @@ const Login = () => {
       );
       // localStorage.setItem('userInfo', JSON.stringify(data)); // Store user info
       if (data && data._id) {
-        navigate('/');
+        navigate(`/user/${data._id}`);
       } else {
         alert('Unexpected login response');
       } // Redirect to the home page

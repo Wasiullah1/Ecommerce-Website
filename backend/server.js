@@ -12,6 +12,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import authRoutes from './routes/authRoutes.js';
 
 
+
 const allowedOrigins = ['http://localhost:3000'];
 
 dotenv.config();

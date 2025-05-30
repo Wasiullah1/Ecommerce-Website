@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/header.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -57,7 +57,7 @@ const Header = () => {
       <form className="search-form" onSubmit={handleSearchSubmit}>
         <input
           type="text"
-          placeholder="Search for products..."
+          placeholder="Search for food..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"

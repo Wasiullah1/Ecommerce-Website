@@ -69,15 +69,15 @@ export const loginUser = async (req, res) => {
 
   
 };  
-export const logoutUser = (req, res) => {
-  res.cookie('jwt', '', {
-    httpOnly: true,
-    expires: new Date(0),
-    secure: true,
-    sameSite: 'lax',
-  });
-  res.status(200).json({ message: 'Logged out successfully' });
-};
+// export const logoutUser = (req, res) => {
+//   res.cookie('jwt', '', {
+//     httpOnly: true,
+//     expires: new Date(0),
+//     secure: true,
+//     sameSite: 'lax',
+//   });
+//   res.status(200).json({ message: 'Logged out successfully' });
+// };
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -87,3 +87,4 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch users' });
   }
 };
+

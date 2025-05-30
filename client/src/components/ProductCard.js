@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className="product-card">
       <Link to={`/product/${product.id}`}>
-        <img src={product.image} alt={product.name} />
+        <img src={`http://localhost:5000${product.image}`} alt={product.name} />
       </Link>
       <h4>{product.name}</h4>
       <p>${product.price.toFixed(2)}</p>

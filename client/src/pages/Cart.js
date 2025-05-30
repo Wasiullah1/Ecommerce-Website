@@ -33,13 +33,9 @@ const Cart = () => {
     cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
 
   const handleCheckout = () => {
-    const loggedIn = localStorage.getItem("loggedIn");
-    if (!loggedIn) {
-      alert("Please login to continue to checkout.");
-      navigate('/login');
-    } else {
+    
       navigate('/checkout');
-    }
+    
   };
 
   return (
