@@ -10,6 +10,8 @@ import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import authRoutes from './routes/authRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 
 
@@ -33,6 +35,8 @@ app.use(cookieParser()); // Parse JSON bodies
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/orders', orderRoutes);
 
 
 // Error Handlers

@@ -59,6 +59,41 @@ const addProduct = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+// DELETE PRODUCT
+export const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+
+    await product.deleteOne();
+    res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete product' });
+  }
+};
+
+// UPDATE PRODUCT
+export const updateProduct = async (req, res) => {
+  try {
+    const { name, description, price, brand, category, countInStock, image } = req.body;
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+
+    product.name = name || product.name;
+    product.description = description || product.description;
+    product.price = price || product.price;
+    product.brand = brand || product.brand;
+    product.category = category || product.category;
+    product.countInStock = countInStock || product.countInStock;
+    product.image = image || product.image;
+
+    const updated = await product.save();
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update product' });
+  }
+};
 
 
-export { getProducts, getProductById, addProduct };
+
+export { getProducts, getProductById, addProduct};

@@ -7,11 +7,15 @@ import {
   getProducts,
   getProductById,
   addProduct,
+  deleteProduct,
+  updateProduct,
 } from '../controllers/productController.js';
 
 router.route('/').get(getProducts);
 router.route('/:id').get(getProductById);
 router.post('/', addProduct);
+router.delete('/:id', deleteProduct);
+router.put('/:id', updateProduct);
 
 
 export default router;

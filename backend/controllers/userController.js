@@ -88,3 +88,32 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+// DELETE USER
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    await user.deleteOne();
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete user' });
+  }
+};
+
+// UPDATE USER
+export const updateUser = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+
+    const updated = await user.save();
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update user' });
+  }
+};

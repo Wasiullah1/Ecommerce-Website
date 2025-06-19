@@ -1,10 +1,30 @@
-import React, { useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
+import axios from 'axios';
 import '../styles/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const [stats, setStats] = useState({  
+  totalProducts: 0,
+  totalUsers: 0,
+  totalOrders: 0  
+  });
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/admin/dashboard');
+        setRecentOrders(data.recentOrders);
+        setTopProducts(data.topProducts);
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+      }
+    };
 
+    fetchDashboardData();
+  }, []);
   useEffect(() => {
     const checkAuth = async () => {
     try {
@@ -24,6 +44,19 @@ const Dashboard = () => {
 
   checkAuth();
 }, [navigate]);
+
+useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:5000/api/admin/stats');
+      setStats(data); // now contains totalProducts, totalUsers, totalOrders
+    } catch (err) {
+      console.error('Failed to load stats', err);
+    }
+  };
+
+  fetchStats();
+}, []);
   
   const handleLogout = async () => {
     try {
@@ -67,15 +100,15 @@ const Dashboard = () => {
         <div className="dashboard-stats">
           <div className="stat-card">
             <h3>📦 Total Products</h3>
-            <p>120</p>
+            <p>{stats.totalProducts}</p>
           </div>
           <div className="stat-card">
             <h3>🧾 Total Orders</h3>
-            <p>75</p>
+            <p>{stats.totalOrders}</p>
           </div>
           <div className="stat-card">
             <h3>👥 Total Users</h3>
-            <p>34</p>
+            <p>{stats.totalUsers}</p>
           </div>
         </div>
 
@@ -83,19 +116,31 @@ const Dashboard = () => {
           <div className="dashboard-section">
             <h2>Recent Orders</h2>
             <ul className="list">
-              <li>Order #1234 - $54.99</li>
-              <li>Order #1233 - $23.00</li>
-              <li>Order #1232 - $89.10</li>
+              {recentOrders.length > 0 ? (
+                recentOrders.map((order) => (
+                  <li key={order._id}>
+                    Order #{order._id.slice(-4)} - ${order.totalPrice}
+                  </li>
+                ))
+              ) : (
+                  <li>No recent orders</li>
+                )}
             </ul>
           </div>
 
           <div className="dashboard-section">
             <h2>Top Products</h2>
             <ul className="list">
-              <li>🍔 Zinger Burger - 320 sold</li>
-              <li>🥤 Cold Drink - 290 sold</li>
-              <li>🍕 Pizza Slice - 250 sold</li>
-            </ul>
+              {topProducts.length > 0 ? (
+                topProducts.map((product) => (
+                  <li key={product._id}>
+                    {product.name} - ⭐ {product.rating}
+                  </li>
+                ))
+              ) : (
+                  <li>No top products yet</li>
+            )}
+          </ul>
           </div>
         </section>
       </div>
