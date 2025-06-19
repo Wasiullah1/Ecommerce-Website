@@ -62,7 +62,7 @@ const Header = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
-        <button type="submit" className="search-button">Search</button>
+        <button className="search-button">Search</button>
       </form>
       <div className="header-icons">
         <div className="cart"><Link to="/cart" className="link-style">🛍️ ${totalAmount}</Link></div>

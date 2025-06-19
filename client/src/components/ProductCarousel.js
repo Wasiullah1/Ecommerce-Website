@@ -36,14 +36,18 @@ const ProductCarousel = () => {
 
   return (
     <section className="carousel">
-      <h2>ON SALE</h2>
+      <h2>Products</h2>
       <div className="carousel-products">
         {products.length === 0 ? (
           <p>Loading...</p>
         ) : (
-          products.map((product) => (
+         products
+          .slice(0, 5)
+          .map((product) => (
           <div className="product-card" key={product._idx}>
-            <div className="product-img">🧃</div>
+            <div className="product-img">
+              <img src={product.image} alt={product.name} className="product-image" />
+            </div>
             <Link to={`/product/${product._id}`} className="link-style"><h4>{product.name}</h4></Link>
             <p className="price">{product.price}</p>
             {product.discount && <span className="discount">{product.discount}</span>}

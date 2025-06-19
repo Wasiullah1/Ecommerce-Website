@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const UserContext = createContext();
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({ children, value }) => {
   const [user, setUser] = useState(null);
 
   const fetchUser = async () => {
@@ -12,6 +12,7 @@ export const UserProvider = ({ children }) => {
         withCredentials: true,
       });
       setUser(data);
+      console.log(user)
     } catch (err) {
       setUser(null);
     }
@@ -20,6 +21,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     fetchUser();
   }, []);
+
 
   return (
     <UserContext.Provider value={{ user, setUser, fetchUser }}>

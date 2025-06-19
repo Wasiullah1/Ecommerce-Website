@@ -23,11 +23,12 @@ const Login = () => {
         { withCredentials: true }
       );
       // localStorage.setItem('userInfo', JSON.stringify(data)); // Store user info
-      if (data && data._id) {
-        navigate(`/user/${data._id}`);
-      } else {
-        alert('Unexpected login response');
-      } // Redirect to the home page
+      data && data._id ? navigate('/') : alert('No user data')
+      // if (data && data._id) {
+      //   navigate(`/user/${data._id}`);
+      // } else {
+      //   alert('Unexpected login response');
+      // } // Redirect to the home page
     } catch (error) {
       setError(error?.response?.data?.message || 'Login failed'); // Set error message
     } finally {

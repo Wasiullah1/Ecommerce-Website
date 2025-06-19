@@ -11,9 +11,12 @@ import Cart from './pages/Cart';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import Checkout from './pages/Checkout';
+import { UserProvider } from './context/UserContext';
+
 
 const App = () => {
   return (
+    // <UserProvider value={} >
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,6 +32,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
+    // </UserProvider>
   );
 };
 

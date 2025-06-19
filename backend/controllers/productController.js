@@ -6,12 +6,19 @@ import Product from '../models/Product.js';
 // @route   GET /api/products
 // @access  Public
 const getProducts = async (req, res) => {
+  
   try{
-    const products = await Product.find({});
-  res.json(products);
-  } catch (error) {
-     res.status(500).json({ message: 'Server Error' });
-  }
+    const category = req.query.category || '';
+
+    let query = {};
+    if (category) {
+      query.category = category;
+    }
+    const products = await Product.find({query});
+    res.json(products);
+    } catch (error) {
+      res.status(500).json({ message: 'Server Error' });
+    }
 };
 
 // @desc    Get single product
