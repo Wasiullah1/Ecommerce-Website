@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../styles/header.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 // import { CartContext } from '../context/CartContext';
 import axios from 'axios';
+import loginContext from '../context/login-context';
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const loginCtx = useContext(loginContext)
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -30,18 +32,18 @@ const Header = () => {
     navigate(`/products?search=${encodeURIComponent(trimmedTerm)}`);
     setSearchTerm('');
   };
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await axios.get('http://localhost:5000/api/users/login', { withCredentials: true });
-        setIsAuthenticated(true);
-      } catch (err) {
-        setIsAuthenticated(false);
-      }
-    };
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     try {
+  //       await axios.get('http://localhost:5000/api/users/login', { withCredentials: true });
+  //       setIsAuthenticated(true);
+  //     } catch (err) {
+  //       setIsAuthenticated(false);
+  //     }
+  //   };
 
-    checkAuth();
-  }, []);
+  //   checkAuth();
+  // }, []);
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:5000/api/users/logout', {}, { withCredentials: true });
@@ -68,7 +70,7 @@ const Header = () => {
         <div className="cart"><Link to="/cart" className="link-style">🛍️ ${totalAmount}</Link></div>
         <div className="auth">{isAuthenticated ? (<button onClick={handleLogout} className='link-style'>Logout</button>
         ):(
-        <Link to="/login" className="link-style">Login/Register</Link>
+        <Link to="/login" className="link-style">{loginCtx.token ? `${loginCtx.username}` : "Login/Register"}</Link>
         )}
         </div>
       </div>
