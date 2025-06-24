@@ -1,36 +1,35 @@
 import '../styles/productCarousel.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { fetchProducts } from '../api/productApi';
 import { Link } from 'react-router-dom';
+import loginContext from '../context/login-context';
+import { useCart } from '../context/CartContext';
 
 const ProductCarousel = () => {
-  // const products = [
-  //   { name: 'YooH Green Tea Drink', price: '$3.49', discount: '15%' },
-  //   { name: 'Trung Nguyen Coffee', price: '$5.99', discount: '' },
-  //   { name: 'Vifon Curry Noodles', price: '$1.99', discount: '20%' }
-  // ];
   const [products, setProducts] = useState([]);
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchProducts();
-      setProducts(data.slice(0, 5)); // only show top 5 products for carousel
+    const getProducts = async () => {
+      const products = await fetchProducts();
+      setProducts(products); // setProducts is your state setter
     };
-    loadData();
-
+    getProducts();
   }, []);
   
   const handleAddToCart = (product) => {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  // const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  const existingProduct = cart.find(item => item._id === product._id);
-  if (existingProduct) {
-    existingProduct.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
+  // const existingProduct = cart.find(item => item._id === product._id);
+  // if (existingProduct) {
+  //   existingProduct.quantity += 1;
+  // } else {
+  //   cart.push({ ...product, quantity: 1 });
+  // }
 
-  localStorage.setItem('cart', JSON.stringify(cart));
+  // localStorage.setItem('cart', JSON.stringify(cart));
+  // alert(`${product.name} added to cart!`);
+  addToCart(product);
   alert(`${product.name} added to cart!`);
 };
 
@@ -44,7 +43,7 @@ const ProductCarousel = () => {
          products
           .slice(0, 5)
           .map((product) => (
-          <div className="product-card" key={product._idx}>
+          <div className="product-card" key={product._id}>
             <div className="product-img">
               <img src={product.image} alt={product.name} className="product-image" />
             </div>

@@ -25,6 +25,7 @@ const Signup = () => {
   }};
 
   return (
+    <div className="auth-bg">
     <div className="auth-container">
       <h2>Signup</h2>
       <form onSubmit={handleSignup} className="auth-form">
@@ -34,6 +35,7 @@ const Signup = () => {
         <button>Signup</button>
         <p onClick={() => navigate('/login')}>Already have an account? Login</p>
       </form>
+    </div>
     </div>
   );
 };

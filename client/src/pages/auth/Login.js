@@ -14,33 +14,19 @@ const Login = () => {
   const loginCtx = useContext(loginContext)
   const handleLogin = async (e) => {
     e.preventDefault();
-    // setLoading(true); // Start loading
-    // setError(''); // Clear any previous errors
-    loginCtx.userLoginHandler(email, password)
-    loginCtx?.token && navigate("/")   
-
-    // try {
-    //   const { data } = await axios.post(
-    //     'http://localhost:5000/api/users/login',
-    //     { email, password },
-    //     { withCredentials: true }
-    //   );
-    //   // localStorage.setItem('userInfo', JSON.stringify(data)); // Store user info
-    //   console.log(data)
-    //   data && data._id ? navigate('/') : alert('No user data')
-    //   // if (data && data._id) {
-    //   //   navigate(`/user/${data._id}`);
-    //   // } else {
-    //   //   alert('Unexpected login response');
-    //   // } // Redirect to the home page
-    // } catch (error) {
-    //   setError(error?.response?.data?.message || 'Login failed'); // Set error message
-    // } finally {
-    //   setLoading(false); // Stop loading
-    // }
+    setLoading(true);
+    setError('');
+    const token = await loginCtx.userLoginHandler(email, password);
+    setLoading(false);
+    if (token) {
+      navigate("/");
+    } else {
+      setError("Login failed");
+    }
   };
 
   return (
+    <div className="auth-bg">
     <div className="auth-container">
       <h2>Login</h2>
       <form onSubmit={handleLogin} className="auth-form">
@@ -66,7 +52,12 @@ const Login = () => {
         <p onClick={() => navigate('/signup')} className="signup-link">
           Don't have an account? Signup
         </p>
+        <span></span>
+        <p onClick={() => navigate('/forgot-password')} className="signup-link">
+          Forgot Password?
+        </p>
       </form>
+    </div>
     </div>
   );
 };

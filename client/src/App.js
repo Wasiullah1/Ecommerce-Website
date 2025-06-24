@@ -11,14 +11,15 @@ import Cart from './pages/Cart';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import Checkout from './pages/Checkout';
-import { UserProvider } from './context/UserContext';
-import LoginContextProvider from './context/login-context';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword'; // ⬅️ Import the page
+
+
 
 const App = () => {
+  
   return (
     // <UserProvider value={} >
-    // <LoginContextProvider>
-
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -31,11 +32,12 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/checkout" element={<Checkout />} />
+
         </Routes>
       </Router>
-      // {/* </UserProvider> */}
-    // </LoginContextProvider>
 
   );
 };

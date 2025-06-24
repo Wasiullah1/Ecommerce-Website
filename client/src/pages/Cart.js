@@ -3,49 +3,47 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/cart.css';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCartItems(storedCart);
-  }, []);
+  const { cart, removeFromCart, addToCart } = useCart(); // Access from context
 
   const handleQuantityChange = (id, amount) => {
-    const updatedCart = cartItems.map(item =>
-      item._id === id
-        ? { ...item, quantity: Math.max(1, item.quantity + amount) }
-        : item
-    );
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    const item = cart.find((item) => item._id === id);
+    if (!item) return;
+
+    if (amount === -1 && item.quantity === 1) return;
+
+    const updatedItem = { ...item, quantity: item.quantity + amount };
+    removeFromCart(id);
+    for (let i = 0; i < updatedItem.quantity; i++) {
+      addToCart(item); // Add multiple times to set correct quantity
+    }
   };
 
-  const handleRemoveItem = id => {
-    const updatedCart = cartItems.filter(item => item._id !== id);
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  };
+  // const handleRemoveItem = id => {
+  //   const updatedCart = cartItems.filter(item => item._id !== id);
+  //   setCartItems(updatedCart);
+  //   localStorage.setItem('cart', JSON.stringify(updatedCart));
+  // };
 
   const getTotalPrice = () =>
-    cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
 
   const handleCheckout = () => {
-    
-      navigate('/checkout');
-    
+    navigate('/checkout');
   };
 
   return (
     <div className="cart-page">
       <h2>Your Cart</h2>
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <div className="cart-container">
-          {cartItems.map(item => (
+          {cart.map(item => (
             <div className="cart-item" key={item._id}>
               <img src={item.image} alt={item.name} />
               <div className="item-details">
@@ -56,7 +54,7 @@ const Cart = () => {
                   <span>{item.quantity}</span>
                   <button onClick={() => handleQuantityChange(item._id, 1)}>+</button>
                 </div>
-                <button className="remove-btn" onClick={() => handleRemoveItem(item._id)}>
+                <button className="remove-btn" onClick={() => removeFromCart(item._id)}>
                   Remove
                 </button>
               </div>

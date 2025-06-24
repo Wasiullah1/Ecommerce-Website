@@ -2,6 +2,8 @@ import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import sendEmail from '../utils/sendEmail.js';
 
 
 export const registerUser = async (req, res) => {
@@ -69,15 +71,6 @@ export const loginUser = async (req, res) => {
 
   
 };  
-// export const logoutUser = (req, res) => {
-//   res.cookie('jwt', '', {
-//     httpOnly: true,
-//     expires: new Date(0),
-//     secure: true,
-//     sameSite: 'lax',
-//   });
-//   res.status(200).json({ message: 'Logged out successfully' });
-// };
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -116,4 +109,44 @@ export const updateUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Failed to update user' });
   }
+};
+
+// Forgot Password
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+  user.resetPasswordToken = hashedToken;
+  user.resetPasswordExpires = Date.now() + 60 * 60 * 1000; // 1 hour
+  await user.save();
+
+  const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+  const message = `Reset your password using the link below:\n\n${resetUrl}`;
+
+  await sendEmail(user.email, 'Password Reset Request', message);
+
+  res.json({ message: 'Password reset link sent to your email.' });
+};
+
+export const resetPassword = async (req, res) => {
+  const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user) return res.status(400).json({ message: 'Invalid or expired token' });
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+
+  res.json({ message: 'Password reset successful' });
 };

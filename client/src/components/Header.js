@@ -2,23 +2,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/header.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-// import { CartContext } from '../context/CartContext';
 import axios from 'axios';
 import loginContext from '../context/login-context';
+import { useCart } from '../context/CartContext';
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
   const loginCtx = useContext(loginContext)
 
-  useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCartItems(storedCart);
-  }, []);
+  const { cart } = useCart(); // Get cart from context
 
-  // const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const totalAmount = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
-
+  const totalAmount = cart.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
+  
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   
@@ -32,18 +27,7 @@ const Header = () => {
     navigate(`/products?search=${encodeURIComponent(trimmedTerm)}`);
     setSearchTerm('');
   };
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     try {
-  //       await axios.get('http://localhost:5000/api/users/login', { withCredentials: true });
-  //       setIsAuthenticated(true);
-  //     } catch (err) {
-  //       setIsAuthenticated(false);
-  //     }
-  //   };
 
-  //   checkAuth();
-  // }, []);
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:5000/api/users/logout', {}, { withCredentials: true });

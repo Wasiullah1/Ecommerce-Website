@@ -1,29 +1,51 @@
+.auth-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: 
+  url('https://images.unsplash.com/photo-1695427038693-7b055c1a63e3?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+  background-size: cover;
+}
+
 .auth-container {
   max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 80px auto;
+  padding: 30px 25px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
+  backdrop-filter: blur(8px);
+}
+.auth-container h2 {
+  margin-bottom: 25px;
+  color: #333;
 }
 
 .auth-form input {
   width: 90%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 12px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
 .auth-form button {
-  width: 95%;
-  padding: 10px;
-  background-color: #007bff;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background: linear-gradient(to right, #007bff, #0056b3);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+.auth-form button:hover {
+  background: linear-gradient(to right, #0056b3, #004494);
 }
 
 .auth-form button[disabled] {
@@ -32,12 +54,33 @@
 }
 
 .error-message {
-  color: red;
+  color: #d9534f;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
 .signup-link {
   color: #007bff;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  font-weight: 500;
   text-decoration: underline;
+}
+.success-message {
+  color: green;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    margin: 40px 20px;
+    padding: 25px 20px;
+  }
+
+  .auth-form input,
+  .auth-form button {
+    font-size: 15px;
+  }
 }

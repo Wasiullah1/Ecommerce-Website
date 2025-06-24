@@ -12,7 +12,7 @@ export const LoginContextProvider = (props) => {
     const userLoginHandlerFunction = async (email, password) => {
         
         try {
-            const { data, statusText } = await axios.post(
+            const { data } = await axios.post(
                 'http://localhost:5000/api/users/login',
                 { email, password },
                 { withCredentials: true }
@@ -29,9 +29,11 @@ export const LoginContextProvider = (props) => {
             // } else {
             //   alert('Unexpected login response');
             // } // Redirect to the home page
+            return data?.token; // return token if login is successful
         } catch (error) {
             // setError(error?.response?.data?.message || 'Login failed'); // Set error message
             console.log(error.message)
+            return null;
         } finally {
             // setLoading(false); // Stop loading
         }
