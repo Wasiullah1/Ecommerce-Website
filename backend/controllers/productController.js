@@ -94,7 +94,7 @@ export const updateProduct = async (req, res) => {
     product.category = category || product.category;
     product.countInStock = countInStock || product.countInStock;
     product.image = image || product.image;
-
+    
     const updated = await product.save();
     res.json(updated);
   } catch (error) {

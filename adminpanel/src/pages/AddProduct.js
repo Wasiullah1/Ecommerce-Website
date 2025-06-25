@@ -10,7 +10,8 @@ const AddProduct = () => {
     category: '',
     brand: '',
     countInStock: '',
-    image: ''
+    image: '',
+    
   });
 
   const handleChange = (e) => {
@@ -28,6 +29,7 @@ const AddProduct = () => {
       brand: product.brand,
       category: product.category,
       countInStock: Number(product.countInStock),
+      
     };
 
 
@@ -50,7 +52,8 @@ const AddProduct = () => {
         category: '',
         brand: '',
         countInStock: '',
-        image: ''
+        image: '',
+        rating: ''
       });
     } catch (error) {
       console.error('Error adding product:', error);
